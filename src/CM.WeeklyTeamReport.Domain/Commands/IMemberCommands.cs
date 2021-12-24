@@ -10,7 +10,7 @@ namespace CM.WeeklyTeamReport.Domain.Commands
 {
     public interface IMemberCommands
     {
-        public TeamMemberDto teamMemberToDto(ITeamMember teamMember, string company);
-        public ITeamMember dtoToTeamMember(TeamMemberDto teamMemberDto);
+        public TeamMemberDto TeamMemberToDto(ITeamMember teamMember, string company);
+        public ITeamMember DtoToTeamMember(TeamMemberDto teamMemberDto);
     }
 }

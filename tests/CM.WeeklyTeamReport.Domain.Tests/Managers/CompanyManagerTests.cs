@@ -20,19 +20,19 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             var fixture = new CompanyManagerFixture();
             var company1 = new Company { Name = "Trevor Philips Industries", ID = 1 };
             var company2 = new Company { Name = "Aperture Science", ID = 2 };
-            var readedCompanies = new List<ICompany>() {company1,company2};
+            var readedCompanies = new List<ICompany>() { company1, company2 };
             var companyDto1 = new CompanyDto { Name = "Trevor Philips Industries", ID = 1 };
             var companyDto2 = new CompanyDto { Name = "Aperture Science", ID = 2 };
 
             fixture.CompanyRepository.Setup(x => x.ReadAll()).Returns(readedCompanies);
-            fixture.CompanyCommands.Setup(x => x.companyToDto(company1)).Returns(companyDto1);
-            fixture.CompanyCommands.Setup(x => x.companyToDto(company2)).Returns(companyDto2);
+            fixture.CompanyCommands.Setup(x => x.CompanyToDto(company1)).Returns(companyDto1);
+            fixture.CompanyCommands.Setup(x => x.CompanyToDto(company2)).Returns(companyDto2);
             var manager = fixture.GetCompanyManager();
 
-            var companies = (List <CompanyDto>)manager.readAll();
+            var companies = (List<CompanyDto>)manager.ReadAll();
             fixture.CompanyRepository.Verify(x => x.ReadAll(), Times.Once);
-            fixture.CompanyCommands.Verify(x => x.companyToDto(company1), Times.Once);
-            fixture.CompanyCommands.Verify(x => x.companyToDto(company2), Times.Once);
+            fixture.CompanyCommands.Verify(x => x.CompanyToDto(company1), Times.Once);
+            fixture.CompanyCommands.Verify(x => x.CompanyToDto(company2), Times.Once);
 
             companies.Should().HaveCount(2);
             companies[0].ID.Should().Be(1);
@@ -50,12 +50,12 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             var companyStub = new Company { Name = "Trevor Philips Industries", ID = id };
             var companyDtoStub = new CompanyDto { Name = "Trevor Philips Industries", ID = id };
             fixture.CompanyRepository.Setup(x => x.Read(id)).Returns(companyStub);
-            fixture.CompanyCommands.Setup(x => x.companyToDto(companyStub)).Returns(companyDtoStub);
+            fixture.CompanyCommands.Setup(x => x.CompanyToDto(companyStub)).Returns(companyDtoStub);
             var manager = fixture.GetCompanyManager();
 
-            var company = manager.read(id);
+            var company = manager.Read(id);
             fixture.CompanyRepository.Verify(x => x.Read(id), Times.Once);
-            fixture.CompanyCommands.Verify(x => x.companyToDto(companyStub), Times.Once);
+            fixture.CompanyCommands.Verify(x => x.CompanyToDto(companyStub), Times.Once);
             company.Should().NotBeNull();
             company.Should().BeOfType<CompanyDto>();
             company.ID.Should().Be(id);
@@ -69,7 +69,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             fixture.CompanyRepository.Setup(x => x.Read(1)).Returns((Company)null);
             var manager = fixture.GetCompanyManager();
 
-            var company = manager.read(1);
+            var company = manager.Read(1);
             company.Should().BeNull();
         }
 
@@ -83,7 +83,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             fixture.CompanyRepository.Setup(x => x.Delete(id));
             var manager = fixture.GetCompanyManager();
 
-            manager.delete(id);
+            manager.Delete(id);
             fixture.CompanyRepository.Verify(x => x.Delete(id), Times.Once);
         }
 
@@ -97,13 +97,13 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             var company = new Company { Name = "Trevor Philips Industries", ID = id };
             var newCompany = new Company { Name = "Trevor Philips Industries", ID = id };
 
-            fixture.CompanyCommands.Setup(x => x.dtoToCompany(companyDto)).Returns(company);
+            fixture.CompanyCommands.Setup(x => x.DtoToCompany(companyDto)).Returns(company);
             fixture.CompanyRepository.Setup(x => x.Create(company)).Returns(newCompany);
 
             var manager = fixture.GetCompanyManager();
-            var createdCompany = manager.create(companyDto);
+            var createdCompany = manager.Create(companyDto);
             fixture.CompanyRepository.Verify(x => x.Create(company), Times.Once);
-            fixture.CompanyCommands.Verify(x => x.dtoToCompany(companyDto), Times.Once);
+            fixture.CompanyCommands.Verify(x => x.DtoToCompany(companyDto), Times.Once);
             createdCompany.ID.Should().Be(companyDto.ID);
             createdCompany.Name.Should().Be(companyDto.Name);
         }
@@ -118,12 +118,12 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             var newCompanyDto = new CompanyDto { Name = "Trevor Philips Industries", ID = 0 };
             var newCompany = new Company { Name = "Trevor Philips Industries", ID = id };
 
-            fixture.CompanyCommands.Setup(x => x.dtoToCompany(newCompanyDto)).Returns(newCompany);
+            fixture.CompanyCommands.Setup(x => x.DtoToCompany(newCompanyDto)).Returns(newCompany);
             fixture.CompanyRepository.Setup(x => x.Update(newCompany));
 
             var manager = fixture.GetCompanyManager();
-            manager.update(oldCompanyDto, newCompanyDto);
-            fixture.CompanyCommands.Verify(x => x.dtoToCompany(newCompanyDto), Times.Once);
+            manager.Update(oldCompanyDto, newCompanyDto);
+            fixture.CompanyCommands.Verify(x => x.DtoToCompany(newCompanyDto), Times.Once);
             fixture.CompanyRepository.Verify(x => x.Update(newCompany), Times.Once);
             newCompanyDto.ID.Should().Be(oldCompanyDto.ID);
             newCompanyDto.Name.Should().Be("Trevor Philips Industries");

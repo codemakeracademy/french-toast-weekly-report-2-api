@@ -21,7 +21,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
         {
             var fixture = new ReportsControllerFixture();
             fixture.WeeklyReportManager
-                .Setup(x => x.readAll(1,1))
+                .Setup(x => x.ReadAll(1,1))
                 .Returns(new List<ReportsDto>() {
                     GetReportDto(1),
                     GetReportDto(2)
@@ -34,7 +34,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
 
             fixture
                 .WeeklyReportManager
-                .Verify(x => x.readAll(1,1), Times.Once);
+                .Verify(x => x.ReadAll(1,1), Times.Once);
         }
         
         [Fact]
@@ -42,7 +42,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
         {
             var fixture = new ReportsControllerFixture();
             fixture.WeeklyReportManager
-                .Setup(x => x.read(1,1,56))
+                .Setup(x => x.Read(1,1,56))
                 .Returns(GetReportDto(56));
             var controller = fixture.GetReportsController();
             var teamMembers = (ReportsDto)((OkObjectResult)controller.Get(1,1,56)).Value;
@@ -51,7 +51,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
 
             fixture
                 .WeeklyReportManager
-                .Verify(x => x.read(1,1,56), Times.Once);
+                .Verify(x => x.Read(1,1,56), Times.Once);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
             var report = GetReport();
             var reportDto = GetReportDto();
             fixture.WeeklyReportManager
-                .Setup(x => x.create(reportDto))
+                .Setup(x => x.Create(reportDto))
                 .Returns(report);
             var controller = fixture.GetReportsController();
             var returnedTM = (WeeklyReport)((CreatedResult)controller.Post(reportDto, 1, 1)).Value;
@@ -71,7 +71,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
 
             fixture
                 .WeeklyReportManager
-                .Verify(x => x.create(reportDto), Times.Once);
+                .Verify(x => x.Create(reportDto), Times.Once);
         }
 
         [Fact]
@@ -81,10 +81,10 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
             var report = GetReport();
             var reportDto = GetReportDto();
             fixture.WeeklyReportManager
-                .Setup(x => x.read(1,1,report.ID))
+                .Setup(x => x.Read(1,1,report.ID))
                 .Returns(reportDto);
             fixture.WeeklyReportManager
-                .Setup(x => x.update(reportDto, reportDto));
+                .Setup(x => x.Update(reportDto, reportDto));
             report.HighThisWeek = "High 2";
             var controller = fixture.GetReportsController();
             var actionResult = controller.Put(reportDto, 1,1, report.ID);
@@ -92,10 +92,10 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
 
             fixture
                 .WeeklyReportManager
-                .Verify(x => x.read(1,1,report.ID), Times.Once);
+                .Verify(x => x.Read(1,1,report.ID), Times.Once);
             fixture
                 .WeeklyReportManager
-                .Verify(x => x.update(reportDto, reportDto), Times.Once);
+                .Verify(x => x.Update(reportDto, reportDto), Times.Once);
         }
 
         [Fact]
@@ -105,9 +105,9 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
             var report = GetReport();
             var reportDto = GetReportDto();
             fixture.WeeklyReportManager
-                .Setup(x => x.delete(reportDto));
+                .Setup(x => x.Delete(reportDto));
             fixture.WeeklyReportManager
-                .Setup(x => x.read(1,1,report.ID))
+                .Setup(x => x.Read(1,1,report.ID))
                 .Returns(reportDto);
 
             var controller = fixture.GetReportsController();
@@ -116,14 +116,14 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
 
             fixture
                 .WeeklyReportManager
-                .Verify(x => x.delete(reportDto), Times.Once);
+                .Verify(x => x.Delete(reportDto), Times.Once);
         }
         [Fact]
         public void ShouldReturnNotFoundOnReadAll()
         {
             var fixture = new ReportsControllerFixture();
             fixture.WeeklyReportManager
-                .Setup(x => x.readAll(1,1))
+                .Setup(x => x.ReadAll(1,1))
                 .Returns((List<ReportsDto>)null);
             var controller = fixture.GetReportsController();
             var reports = controller.Get(1,1);
@@ -135,7 +135,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
         {
             var fixture = new ReportsControllerFixture();
             fixture.WeeklyReportManager
-                .Setup(x => x.read(1, 1,1))
+                .Setup(x => x.Read(1, 1,1))
                 .Returns((ReportsDto)null);
             var controller = fixture.GetReportsController();
             var report = controller.Get(1,1,1);
@@ -148,7 +148,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
             var fixture = new ReportsControllerFixture();
             var reportDto = GetReportDto();
             fixture.WeeklyReportManager
-                .Setup(x => x.create(reportDto))
+                .Setup(x => x.Create(reportDto))
                 .Returns((WeeklyReport)null);
             var controller = fixture.GetReportsController();
             var report = controller.Post(reportDto,1,1);
@@ -161,7 +161,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
             var fixture = new ReportsControllerFixture();
             var reportDto = GetReportDto();
             fixture.WeeklyReportManager
-                .Setup(x => x.read(1, 1,1))
+                .Setup(x => x.Read(1, 1,1))
                 .Returns((ReportsDto)null);
             var controller = fixture.GetReportsController();
             var report = controller.Put(reportDto, 1, 1,1);
@@ -174,7 +174,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
             var fixture = new ReportsControllerFixture();
             var reportDto = GetReportDto();
             fixture.WeeklyReportManager
-                .Setup(x => x.read(1, 1,1))
+                .Setup(x => x.Read(1, 1,1))
                 .Returns((ReportsDto)null);
             var controller = fixture.GetReportsController();
             var report = controller.Delete(1, 1,1);

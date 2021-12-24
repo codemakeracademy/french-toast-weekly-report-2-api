@@ -21,46 +21,46 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
             _repository = weeklyReportRepository;
             _reportCommands = reportCommands;
         }
-        public IWeeklyReport create(ReportsDto newWeeklyReport)
+        public IWeeklyReport Create(ReportsDto newWeeklyReport)
         {
-            var newReport = _reportCommands.dtoToReport(newWeeklyReport);
+            var newReport = _reportCommands.DtoToReport(newWeeklyReport);
             return _repository.Create(newReport);
         }
 
-        public void delete(ReportsDto reportDto)
+        public void Delete(ReportsDto reportDto)
         {
-            var report = _reportCommands.dtoToReport(reportDto);
+            var report = _reportCommands.DtoToReport(reportDto);
             _repository.Delete(report);
         }
 
-        public ICollection<ReportsDto> readAll(int companyId, int teamMemberId)
+        public ICollection<ReportsDto> ReadAll(int companyId, int teamMemberId)
         {
-            var reports =_repository.ReadAll(companyId, teamMemberId);
-            if (reports.Count==0 )
+            var reports = _repository.ReadAll(companyId, teamMemberId);
+            if (reports.Count == 0)
             {
                 return null;
             }
-            var reportsDto = reports.Select(el => _reportCommands.fullReportToDto(el)).ToList();
+            var reportsDto = reports.Select(el => _reportCommands.FullReportToDto(el)).ToList();
 
             return reportsDto;
         }
 
-        public ReportsDto read(int companyId, int teamMemberId, int reportId)
+        public ReportsDto Read(int companyId, int teamMemberId, int reportId)
         {
             var report = _repository.Read(companyId, teamMemberId, reportId);
             if (report == null)
             {
                 return null;
             }
-            var reportDto = _reportCommands.fullReportToDto(report);
+            var reportDto = _reportCommands.FullReportToDto(report);
 
             return reportDto;
         }
 
-        public void update(ReportsDto oldEntity, ReportsDto newEntity)
+        public void Update(ReportsDto oldEntity, ReportsDto newEntity)
         {
             newEntity.ID = oldEntity.ID;
-            var report = _reportCommands.dtoToReport(newEntity);
+            var report = _reportCommands.DtoToReport(newEntity);
             _repository.Update(report);
         }
 
@@ -68,7 +68,7 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
         {
             var firstDate = start;
             var lastDate = end;
-            if (start> end)
+            if (start > end)
             {
                 firstDate = end;
                 lastDate = start;
@@ -78,7 +78,7 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
             {
                 return null;
             }
-            var reportsDto = reports.Select(el => _reportCommands.fullReportToDto(el)).ToList();
+            var reportsDto = reports.Select(el => _reportCommands.FullReportToDto(el)).ToList();
 
             return reportsDto;
         }
@@ -92,7 +92,8 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
                 return null;
             }
             var dict = new Dictionary<int, OverviewReportDto>() { };
-            var weekReports = reports.Select(el => {
+            var weekReports = reports.Select(el =>
+            {
                 if (!dict.ContainsKey(el.AuthorId))
                 {
                     dict.Add(el.AuthorId, new OverviewReportDto()
@@ -103,7 +104,7 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
                     });
                 }
                 var monday = end.FirstDateInWeek(IWeeklyReport.StartOfWeek);
-                int index = (int)((monday - el.Date).TotalDays/7);
+                int index = (int)((monday - el.Date).TotalDays / 7);
                 dict[el.AuthorId].MoraleLevel[index] = el.MoraleLevel;
                 dict[el.AuthorId].StressLevel[index] = el.StressLevel;
                 dict[el.AuthorId].WorkloadLevel[index] = el.WorkloadLevel;

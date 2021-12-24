@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace CM.WeeklyTeamReport.Domain.Commands
 {
-    public class ReportCommands: IReportCommands
+    public class ReportCommands : IReportCommands
     {
-        public ReportsDto reportToDto(IWeeklyReport report)
+        public ReportsDto ReportToDto(IWeeklyReport report)
         {
             var reportsDto = new ReportsDto();
             reportsDto.HighThisWeek = report.HighThisWeek;
@@ -30,7 +30,7 @@ namespace CM.WeeklyTeamReport.Domain.Commands
 
             return reportsDto;
         }
-        public IWeeklyReport dtoToReport(ReportsDto reportsDto)
+        public IWeeklyReport DtoToReport(ReportsDto reportsDto)
         {
             var report = new WeeklyReport();
             report.HighThisWeek = reportsDto.HighThisWeek;
@@ -49,7 +49,7 @@ namespace CM.WeeklyTeamReport.Domain.Commands
             return report;
         }
 
-        public ReportsDto fullReportToDto(IFullWeeklyReport fullReport)
+        public ReportsDto FullReportToDto(IFullWeeklyReport fullReport)
         {
             var reportsDto = new ReportsDto();
             reportsDto.HighThisWeek = fullReport.HighThisWeek;
@@ -61,9 +61,10 @@ namespace CM.WeeklyTeamReport.Domain.Commands
             reportsDto.WorkloadGradeId = fullReport.WorkloadGradeId;
             reportsDto.StressGradeId = fullReport.StressGradeId;
             reportsDto.ID = fullReport.ID;
-            reportsDto.MoraleGrade = new Grade{
-                ID = fullReport.MoraleGradeId, 
-                Level = (Level)fullReport.MoraleLevel, 
+            reportsDto.MoraleGrade = new Grade
+            {
+                ID = fullReport.MoraleGradeId,
+                Level = (Level)fullReport.MoraleLevel,
                 Commentary = fullReport.MoraleCommentary
             };
             reportsDto.WorkloadGrade = new Grade

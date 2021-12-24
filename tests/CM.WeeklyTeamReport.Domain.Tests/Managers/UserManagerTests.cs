@@ -61,7 +61,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             fixture.UserCommand.Setup(x => x.TeamMemberToUserDto(member, leadersTeam, teammatesTeam)).Returns(userDto);
             var manager = fixture.GetUserManager();
 
-            var result = manager.readUserBySub("a");
+            var result = manager.ReadUserBySub("a");
             fixture.MembersRepository.Verify(x => x.ReadBySub("a"), Times.Once);
             fixture.MembersRepository.Verify(x => x.GetLeadersToReport(member), Times.Once);
             fixture.MembersRepository.Verify(x => x.GetReportingMembers(member), Times.Once);
@@ -75,7 +75,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             fixture.MembersRepository.Setup(x => x.ReadBySub("fd")).Returns((TeamMember)null);
             var manager = fixture.GetUserManager();
 
-            var result = manager.readUserBySub("fd");
+            var result = manager.ReadUserBySub("fd");
             result.Should().BeNull();
         }
         public class UserManagerFixture

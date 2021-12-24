@@ -26,7 +26,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _manager.readAll();
+            var result = _manager.ReadAll();
             if (result == null)
             {
                 return NotFound();
@@ -37,7 +37,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var result = _manager.read(id);
+            var result = _manager.Read(id);
             if (result == null)
             {
                 return NotFound();
@@ -48,7 +48,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post ([FromBody] CompanyDto companyDto)
         {
-            var result = _manager.create(companyDto);
+            var result = _manager.Create(companyDto);
             if (result == null)
             {
                 return NoContent();
@@ -61,12 +61,12 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [Authorize]
         public IActionResult Put([FromBody] CompanyDto companyDto, int id)
         {
-            var updatedCompany = _manager.read(id);
+            var updatedCompany = _manager.Read(id);
             if (updatedCompany == null)
             {
                 return NotFound();
             }
-            _manager.update(updatedCompany, companyDto);
+            _manager.Update(updatedCompany, companyDto);
             return NoContent();
         }
         // DELETE api/<CompanyController>/id
@@ -74,12 +74,12 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
-            var result = _manager.read(id);
+            var result = _manager.Read(id);
             if (result == null)
             {
                 return NotFound();
             }
-            _manager.delete(id);
+            _manager.Delete(id);
             return NoContent();
         }
     }

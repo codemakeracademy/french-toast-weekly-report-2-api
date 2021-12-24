@@ -20,7 +20,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
                 Name = companyName,
                 CreationDate = creationDate
             };
-            var company = commands.dtoToCompany(companyDto);
+            var company = commands.DtoToCompany(companyDto);
             Assert.Equal(company.Name, companyDto.Name);
             Assert.Equal(company.CreationDate, companyDto.CreationDate);
             Assert.Equal(companyDto.ID, company.ID);
@@ -36,7 +36,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
                 Name = companyName,
                 CreationDate = creationDate
             };
-            var companyDto = commands.companyToDto(company);
+            var companyDto = commands.CompanyToDto(company);
             Assert.Equal(company.Name, companyDto.Name);
             Assert.Equal(company.CreationDate, companyDto.CreationDate);
             Assert.Equal(companyDto.ID, company.ID);

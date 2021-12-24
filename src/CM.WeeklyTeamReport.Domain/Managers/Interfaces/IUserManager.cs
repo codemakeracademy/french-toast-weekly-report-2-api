@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace CM.WeeklyTeamReport.Domain.Managers.Interfaces
 {
     public interface IUserManager
-    {    
-        public UserDto readUserBySub(string sub);
+    {
+        public UserDto ReadUserBySub(string sub);
     }
 }

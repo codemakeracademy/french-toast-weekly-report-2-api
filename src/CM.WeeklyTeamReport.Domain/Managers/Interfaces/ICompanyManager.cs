@@ -10,10 +10,10 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Interfaces
 {
     public interface ICompanyManager
     {
-        public ICompany create(CompanyDto companyDto);
-        public CompanyDto read(int entityId);
-        public ICollection<CompanyDto> readAll();
-        public void update(CompanyDto oldEntity, CompanyDto newEntity);
-        public void delete(int entityId);
+        public ICompany Create(CompanyDto companyDto);
+        public CompanyDto Read(int entityId);
+        public ICollection<CompanyDto> ReadAll();
+        public void Update(CompanyDto oldEntity, CompanyDto newEntity);
+        public void Delete(int entityId);
     }
 }

@@ -23,7 +23,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [HttpGet]
         public IActionResult Get(int companyId, int memberId)
         {
-            var result = _manager.readAll(companyId, memberId);
+            var result = _manager.ReadAll(companyId, memberId);
             if (result == null)
             {
                 return NotFound();
@@ -35,7 +35,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [Route("{reportId}")]
         public IActionResult Get(int companyId, int memberId, int reportId)
         {
-            var result = _manager.read(companyId, memberId, reportId);
+            var result = _manager.Read(companyId, memberId, reportId);
             if (result == null)
             {
                 return NotFound();
@@ -71,7 +71,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ReportsDto entity, int companyId, int memberId)
         {
-            var result = _manager.create(entity);
+            var result = _manager.Create(entity);
             if (result == null)
             {
                 return NoContent();
@@ -84,12 +84,12 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [Route("{reportId}")]
         public IActionResult Put([FromBody] ReportsDto entity, int companyId, int memberId, int reportId)
         {
-            var updatedReport = _manager.read(companyId, memberId, reportId);
+            var updatedReport = _manager.Read(companyId, memberId, reportId);
             if (updatedReport == null)
             {
                 return NotFound();
             }
-            _manager.update(updatedReport, entity);
+            _manager.Update(updatedReport, entity);
             return NoContent();
         }
 
@@ -97,12 +97,12 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [Route("{reportId}")]
         public IActionResult Delete(int companyId, int memberId, int reportId)
         {
-            var result = _manager.read(companyId, memberId, reportId);
+            var result = _manager.Read(companyId, memberId, reportId);
             if (result == null)
             {
                 return NotFound();
             }
-            _manager.delete(result);
+            _manager.Delete(result);
             return NoContent();
         }
     }

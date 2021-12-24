@@ -10,45 +10,46 @@ using System.Threading.Tasks;
 
 namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
 {
-    public class CompanyManager: ICompanyManager
+    public class CompanyManager : ICompanyManager
     {
         private readonly ICompanyRepository _repository;
         private readonly ICompanyCommand _companyCommand;
 
-        public CompanyManager(ICompanyRepository companyRepository, ICompanyCommand companyCommand) {
+        public CompanyManager(ICompanyRepository companyRepository, ICompanyCommand companyCommand)
+        {
             _repository = companyRepository;
             _companyCommand = companyCommand;
         }
 
-        public ICompany create(CompanyDto companyDto)
+        public ICompany Create(CompanyDto companyDto)
         {
-            var newCompany = _companyCommand.dtoToCompany(companyDto);
+            var newCompany = _companyCommand.DtoToCompany(companyDto);
             newCompany.CreationDate = DateTime.Today;
             return _repository.Create(newCompany);
         }
-        public CompanyDto read(int entityId)
+        public CompanyDto Read(int entityId)
         {
             var company = _repository.Read(entityId);
             if (company == null)
             {
                 return null;
             }
-            var companyDto = _companyCommand.companyToDto(company);
+            var companyDto = _companyCommand.CompanyToDto(company);
             return companyDto;
         }
-        public ICollection<CompanyDto> readAll()
+        public ICollection<CompanyDto> ReadAll()
         {
             var companies = _repository.ReadAll();
-            var companiesDto = companies.Select(el => _companyCommand.companyToDto(el)).ToList();
+            var companiesDto = companies.Select(el => _companyCommand.CompanyToDto(el)).ToList();
             return companiesDto;
         }
-        public void update(CompanyDto oldEntity, CompanyDto newEntity)
+        public void Update(CompanyDto oldEntity, CompanyDto newEntity)
         {
             newEntity.ID = oldEntity.ID;
-            var company = _companyCommand.dtoToCompany(newEntity);
+            var company = _companyCommand.DtoToCompany(newEntity);
             _repository.Update(company);
         }
-        public void delete(int entityId)
+        public void Delete(int entityId)
         {
             _repository.Delete(entityId);
         }

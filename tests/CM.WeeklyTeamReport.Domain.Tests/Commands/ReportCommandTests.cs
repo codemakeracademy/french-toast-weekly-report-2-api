@@ -40,7 +40,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
                 AnythingElse = anythingElse,
                 Date = reportDate
             };
-            var report = commands.dtoToReport(reportDto);
+            var report = commands.DtoToReport(reportDto);
             Assert.Equal(reportDto.ID, report.ID);
             Assert.Equal(reportDto.AuthorId, report.AuthorId);
             Assert.Equal(reportDto.MoraleGradeId, report.MoraleGradeId);
@@ -82,7 +82,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
                 AnythingElse = anythingElse,
                 Date = reportDate
             };
-            var reportDto = commands.reportToDto(report);
+            var reportDto = commands.ReportToDto(report);
             Assert.Equal(reportDto.ID, report.ID);
             Assert.Equal(reportDto.AuthorId, report.AuthorId);
             Assert.Equal(reportDto.MoraleGradeId, report.MoraleGradeId);
@@ -123,7 +123,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
                 AnythingElse = anythingElse,
                 Date = reportDate
             };
-            var reportDto = commands.fullReportToDto(report);
+            var reportDto = commands.FullReportToDto(report);
             Assert.Equal(reportDto.ID, report.ID);
             Assert.Equal(reportDto.AuthorId, report.AuthorId);
             Assert.Equal(reportDto.MoraleGradeId, report.MoraleGradeId);

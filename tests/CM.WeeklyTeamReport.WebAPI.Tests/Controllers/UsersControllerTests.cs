@@ -26,7 +26,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
             int id = 1;
             string sub = $"auth0|{id}";
             fixture.Manager
-                .Setup(x => x.readUserBySub(sub))
+                .Setup(x => x.ReadUserBySub(sub))
                 .Returns(GetUserDto(id));
             var controller = fixture.GetUsersController();
             var contextMock = new Mock<HttpContext>();
@@ -38,7 +38,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
 
             fixture
                 .Manager
-                .Verify(x => x.readUserBySub(sub), Times.Once);
+                .Verify(x => x.ReadUserBySub(sub), Times.Once);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers.Tests
             var fixture = new MembersControllerFixture();
             string sub = "auth0|1";
             fixture.Manager
-                .Setup(x => x.readUserBySub(sub))
+                .Setup(x => x.ReadUserBySub(sub))
                 .Returns((UserDto)null);
             var controller = fixture.GetUsersController();
             var contextMock = new Mock<HttpContext>();

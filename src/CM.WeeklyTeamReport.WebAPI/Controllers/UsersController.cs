@@ -27,7 +27,7 @@ namespace CM.WeeklyTeamReport.WebAPI.Controllers
         [Authorize]
         public IActionResult Get()
         {
-            var result = _manager.readUserBySub(User.Identity.Name);
+            var result = _manager.ReadUserBySub(User.Identity.Name);
             if (result == null)
             {
                 return NotFound();

@@ -11,11 +11,11 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Interfaces
 {
     public interface ITeamMemberManager
     {
-        public ICollection<TeamMemberDto> readAll(int companyId);
-        public TeamMemberDto read(int companyId, int teamMemberId);
-        public TeamMemberDto readBySub(string sub);
-        public ITeamMember create(TeamMemberDto newTeamMember);
-        public void update(TeamMemberDto oldEntity, TeamMemberDto newEntity);
-        public void delete(int companyId, int entityIdy);
+        public ICollection<TeamMemberDto> ReadAll(int companyId);
+        public TeamMemberDto Read(int companyId, int teamMemberId);
+        public TeamMemberDto ReadBySub(string sub);
+        public ITeamMember Create(TeamMemberDto newTeamMember);
+        public void Update(TeamMemberDto oldEntity, TeamMemberDto newEntity);
+        public void Delete(int companyId, int entityIdy);
     }
 }

@@ -66,15 +66,15 @@ namespace CM.WeeklyTeamReport.Domain.Tests
 
             fixture.CompanyRepository.Setup(el => el.GetCompanyName(id)).Returns(setCompanyName);
             fixture.MemberRepository.Setup(el => el.ReadAll(id)).Returns(membersList);
-            fixture.MemberCommands.Setup(el => el.teamMemberToDto(member1, setCompanyName)).Returns(memberDto1);
-            fixture.MemberCommands.Setup(el => el.teamMemberToDto(member2, setCompanyName)).Returns(memberDto2);
+            fixture.MemberCommands.Setup(el => el.TeamMemberToDto(member1, setCompanyName)).Returns(memberDto1);
+            fixture.MemberCommands.Setup(el => el.TeamMemberToDto(member2, setCompanyName)).Returns(memberDto2);
 
             var manager = fixture.GetMemberManager();
-            var members = (List<TeamMemberDto>)manager.readAll(id);
+            var members = (List<TeamMemberDto>)manager.ReadAll(id);
             members.Should().HaveCount(2);
             fixture.CompanyRepository.Verify(x => x.GetCompanyName(id), Times.Once);
-            fixture.MemberCommands.Verify(x => x.teamMemberToDto(member1, setCompanyName), Times.Once);
-            fixture.MemberCommands.Verify(x => x.teamMemberToDto(member1, setCompanyName), Times.Once);
+            fixture.MemberCommands.Verify(x => x.TeamMemberToDto(member1, setCompanyName), Times.Once);
+            fixture.MemberCommands.Verify(x => x.TeamMemberToDto(member1, setCompanyName), Times.Once);
             fixture.MemberRepository.Verify(el => el.ReadAll(id), Times.Once);
         }
 
@@ -86,7 +86,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             fixture.CompanyRepository.Setup(cr => cr.Read(companyId)).Returns((Company)null);
 
             var manager = fixture.GetMemberManager();
-            Action readAll = () => { manager.readAll(companyId); };
+            Action readAll = () => { manager.ReadAll(companyId); };
             readAll.Should().Throw<DbRecordNotFoundException>();
         }
 
@@ -120,12 +120,12 @@ namespace CM.WeeklyTeamReport.Domain.Tests
 
             fixture.CompanyRepository.Setup(el => el.GetCompanyName(companyId)).Returns(setCompanyName);
             fixture.MemberRepository.Setup(el => el.Read(companyId, memberId)).Returns(member);
-            fixture.MemberCommands.Setup(el => el.teamMemberToDto(member, setCompanyName)).Returns(memberDto);
+            fixture.MemberCommands.Setup(el => el.TeamMemberToDto(member, setCompanyName)).Returns(memberDto);
 
             var manager = fixture.GetMemberManager();
-            var radedMember = manager.read(companyId, memberId);
+            var radedMember = manager.Read(companyId, memberId);
             radedMember.Should().BeOfType<TeamMemberDto>();
-            fixture.MemberCommands.Verify(el => el.teamMemberToDto(member, setCompanyName), Times.Once);
+            fixture.MemberCommands.Verify(el => el.TeamMemberToDto(member, setCompanyName), Times.Once);
             fixture.MemberRepository.Verify(el => el.Read(companyId, memberId), Times.Once);
             fixture.CompanyRepository.Verify(el => el.GetCompanyName(companyId), Times.Once);
         }
@@ -160,12 +160,12 @@ namespace CM.WeeklyTeamReport.Domain.Tests
 
             fixture.CompanyRepository.Setup(el => el.GetCompanyName(member.CompanyId)).Returns(setCompanyName);
             fixture.MemberRepository.Setup(el => el.ReadBySub(sub)).Returns(member);
-            fixture.MemberCommands.Setup(el => el.teamMemberToDto(member, setCompanyName)).Returns(memberDto);
+            fixture.MemberCommands.Setup(el => el.TeamMemberToDto(member, setCompanyName)).Returns(memberDto);
 
             var manager = fixture.GetMemberManager();
-            var radedMember = manager.readBySub(sub);
+            var radedMember = manager.ReadBySub(sub);
             radedMember.Should().BeOfType<TeamMemberDto>();
-            fixture.MemberCommands.Verify(el => el.teamMemberToDto(member, setCompanyName), Times.Once);
+            fixture.MemberCommands.Verify(el => el.TeamMemberToDto(member, setCompanyName), Times.Once);
             fixture.MemberRepository.Verify(el => el.ReadBySub(sub), Times.Once);
             fixture.CompanyRepository.Verify(el => el.GetCompanyName(member.CompanyId), Times.Once);
         }
@@ -178,7 +178,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             fixture.MemberRepository.Setup(el => el.Read(1, 1)).Returns((TeamMember)null);
 
             var manager = fixture.GetMemberManager();
-            var radedMember = manager.read(1, 1);
+            var radedMember = manager.Read(1, 1);
             radedMember.Should().BeNull();
         }
 
@@ -190,7 +190,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             fixture.MemberRepository.Setup(el => el.ReadBySub(sub)).Returns((TeamMember)null);
 
             var manager = fixture.GetMemberManager();
-            var radedMember = manager.readBySub(sub);
+            var radedMember = manager.ReadBySub(sub);
             radedMember.Should().BeNull();
         }
 
@@ -214,7 +214,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             fixture.MemberRepository.Setup(x => x.Delete(memberId));
             var manager = fixture.GetMemberManager();
 
-            manager.delete(companyId, memberId);
+            manager.Delete(companyId, memberId);
             fixture.MemberRepository.Verify(el => el.Delete(memberId), Times.Once);
         }
 
@@ -247,13 +247,13 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             };
 
             fixture.MemberRepository.Setup(el => el.Create(member)).Returns(member);
-            fixture.MemberCommands.Setup(el => el.dtoToTeamMember(memberDto)).Returns(member);
+            fixture.MemberCommands.Setup(el => el.DtoToTeamMember(memberDto)).Returns(member);
 
             var manager = fixture.GetMemberManager();
-            var newMember = manager.create(memberDto);
+            var newMember = manager.Create(memberDto);
             newMember.Should().BeOfType<TeamMember>();
             fixture.MemberRepository.Verify(el => el.Create(member), Times.Once);
-            fixture.MemberCommands.Verify(el => el.dtoToTeamMember(memberDto), Times.Once);
+            fixture.MemberCommands.Verify(el => el.DtoToTeamMember(memberDto), Times.Once);
         }
 
         [Theory]
@@ -293,12 +293,12 @@ namespace CM.WeeklyTeamReport.Domain.Tests
                 Title = "TTT"
             };
 
-            fixture.MemberCommands.Setup(el => el.dtoToTeamMember(newMemberDto)).Returns(newMember);
+            fixture.MemberCommands.Setup(el => el.DtoToTeamMember(newMemberDto)).Returns(newMember);
             fixture.MemberRepository.Setup(el => el.Update(newMember));
 
             var manager = fixture.GetMemberManager();
-            manager.update(oldMemberDto, newMemberDto);
-            fixture.MemberCommands.Verify(el => el.dtoToTeamMember(newMemberDto), Times.Once);
+            manager.Update(oldMemberDto, newMemberDto);
+            fixture.MemberCommands.Verify(el => el.DtoToTeamMember(newMemberDto), Times.Once);
             fixture.MemberRepository.Verify(el => el.Update(newMember), Times.Once);
 
             newMember.ID.Should().Be(newMemberDto.ID);

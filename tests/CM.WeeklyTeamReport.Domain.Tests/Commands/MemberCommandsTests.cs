@@ -15,7 +15,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
             var fixture = new TeamMemberTestsFixture();
             var tmDto = fixture.GetTeamMemberDto();
             
-            var tm = commands.dtoToTeamMember(tmDto);
+            var tm = commands.DtoToTeamMember(tmDto);
 
             Assert.Equal(tm.FirstName, tmDto.FirstName);
             Assert.Equal(tm.LastName, tmDto.LastName);
@@ -29,7 +29,7 @@ namespace CM.WeeklyTeamReport.Domain.Tests
         {
             var fixture = new TeamMemberTestsFixture();
             var tm = fixture.GetTeamMember();
-            var tmDto = commands.teamMemberToDto(tm, "Sony");
+            var tmDto = commands.TeamMemberToDto(tm, "Sony");
 
             Assert.Equal("Sony", tmDto.CompanyName);
             Assert.Equal(tm.FirstName, tmDto.FirstName);

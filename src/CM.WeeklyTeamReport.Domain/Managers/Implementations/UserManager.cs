@@ -19,7 +19,7 @@ namespace CM.WeeklyTeamReport.Domain.Managers.Implementations
             _teamMemberRepository = teamMemberRepository;
             _userCommands = userCommands;
         }
-        public UserDto readUserBySub(string sub)
+        public UserDto ReadUserBySub(string sub)
         {
             var teamMember = _teamMemberRepository.ReadBySub(sub);
             if(teamMember == null)

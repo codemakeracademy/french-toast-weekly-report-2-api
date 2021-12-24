@@ -10,9 +10,9 @@ namespace CM.WeeklyTeamReport.Domain.Commands
 {
     public interface ICompanyCommand
     {
-        public CompanyDto companyToDto(ICompany company);
+        public CompanyDto CompanyToDto(ICompany company);
 
-        public Company dtoToCompany(CompanyDto companyDto);
-        
+        public Company DtoToCompany(CompanyDto companyDto);
+
     }
 }

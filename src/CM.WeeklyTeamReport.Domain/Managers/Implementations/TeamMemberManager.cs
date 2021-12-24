@@ -22,26 +22,26 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
             _memberCommands = memberCommands;
         }
 
-        public ITeamMember create(TeamMemberDto teamMember)
+        public ITeamMember Create(TeamMemberDto teamMember)
         {
             CheckIfCompanyExists(teamMember.CompanyId);
 
-            var newTeamMember = _memberCommands.dtoToTeamMember(teamMember);
+            var newTeamMember = _memberCommands.DtoToTeamMember(teamMember);
             return _teamMemberRepository.Create(newTeamMember);
         }
 
-        public void delete(int companyId, int teamMemberId)
+        public void Delete(int companyId, int teamMemberId)
         {
             CheckIfCompanyExists(companyId);
             _teamMemberRepository.Delete(teamMemberId);
         }
 
-        public ICollection<TeamMemberDto> readAll(int companyId)
+        public ICollection<TeamMemberDto> ReadAll(int companyId)
         {
             CheckIfCompanyExists(companyId);
             var teamMembers = _teamMemberRepository.ReadAll(companyId);
             string companyName = _companyRepository.GetCompanyName(companyId);
-            var teamMembersDto = teamMembers.Select(el => _memberCommands.teamMemberToDto(el, companyName)).ToList();
+            var teamMembersDto = teamMembers.Select(el => _memberCommands.TeamMemberToDto(el, companyName)).ToList();
 
             return teamMembersDto;
         }
@@ -52,7 +52,7 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
                 throw new DbRecordNotFoundException($"Company with id {companyId} not found.");
         }
 
-        public TeamMemberDto read(int companyId, int teamMemberId)
+        public TeamMemberDto Read(int companyId, int teamMemberId)
         {
             CheckIfCompanyExists(companyId);
             var teamMember = _teamMemberRepository.Read(companyId, teamMemberId);
@@ -61,12 +61,12 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
                 return null;
             }
             string companyName = _companyRepository.GetCompanyName(companyId);
-            var teamMemberDto = _memberCommands.teamMemberToDto(teamMember, companyName);
+            var teamMemberDto = _memberCommands.TeamMemberToDto(teamMember, companyName);
 
             return teamMemberDto;
         }
 
-        public TeamMemberDto readBySub(string sub)
+        public TeamMemberDto ReadBySub(string sub)
         {
             var teamMember = _teamMemberRepository.ReadBySub(sub);
             if (teamMember == null)
@@ -74,12 +74,12 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
                 return null;
             }
             string companyName = _companyRepository.GetCompanyName(teamMember.CompanyId);
-            var teamMemberDto = _memberCommands.teamMemberToDto(teamMember, companyName);
+            var teamMemberDto = _memberCommands.TeamMemberToDto(teamMember, companyName);
 
             return teamMemberDto;
         }
 
-        public void update(TeamMemberDto oldEntity, TeamMemberDto newEntity)
+        public void Update(TeamMemberDto oldEntity, TeamMemberDto newEntity)
         {
             newEntity.ID = oldEntity.ID;
             newEntity.CompanyId = oldEntity.CompanyId;
@@ -87,7 +87,7 @@ namespace CM.WeeklyTeamReport.Domain.Repositories.Managers
             newEntity.Sub = oldEntity.Sub;
             newEntity.CompanyName = oldEntity.CompanyName;
             newEntity.InviteLink = oldEntity.InviteLink;
-            var teamMember = _memberCommands.dtoToTeamMember(newEntity);
+            var teamMember = _memberCommands.DtoToTeamMember(newEntity);
             _teamMemberRepository.Update(teamMember);
         }
     }
